@@ -2,19 +2,31 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>SandTech | Admin</title>
+    <title>SandTech | Admin Panel</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="card">
-        <button onclick="window.location.href='index.html'" style="background: #334155; color: white; margin-bottom: 20px; cursor: pointer; border: none; padding: 10px; border-radius: 4px;">Retour au Salon</button>
+        <!-- Navigation -->
+        <button onclick="window.location.href='index.html'" style="background: #334155; color: white; margin-bottom: 20px; cursor: pointer; border: none; padding: 10px; border-radius: 4px; width: 100%;">
+            Retour au Salon
+        </button>
+
         <h1>Dashboard Admin</h1>
-        <div id="user-list"></div>
+        
+        <!-- Bouton de suppression -->
+        <button id="btn-clear" style="background: #ef4444; color: white; margin-bottom: 20px; cursor: pointer; border: none; padding: 10px; border-radius: 4px; width: 100%;">
+            Vider tout le chat
+        </button>
+
+        <div id="user-list">
+            <p>Chargement des utilisateurs...</p>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+        import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyApHM6M8CMhKaad5E4lQfWzjxJziMzWkBs",
@@ -28,14 +40,27 @@
 
         const db = getDatabase(initializeApp(firebaseConfig));
 
-        if (prompt("Mot de passe Admin :") === "ayman") {
+        // Vérification Admin
+        if (prompt("Mot de passe Admin :") !== "ayman") {
+            alert("Accès refusé.");
+            window.location.href = "index.html";
+        } else {
+            // Affichage des utilisateurs
             onValue(ref(db, 'users'), (snapshot) => {
                 const data = snapshot.val();
                 const list = document.getElementById('user-list');
-                list.innerHTML = data ? Object.values(data).map(u => `<p><b>${u.pseudo}</b> (${u.email})</p>`).join('') : "Aucun utilisateur.";
+                list.innerHTML = data ? Object.values(data).map(u => 
+                    `<p style="border-bottom:1px solid #334155; padding:5px;"><b>${u.pseudo}</b> (${u.email})</p>`
+                ).join('') : "Aucun utilisateur trouvé.";
             });
-        } else {
-            window.location.href = "index.html";
+
+            // Action de suppression
+            document.getElementById('btn-clear').addEventListener('click', () => {
+                if (confirm("Attention : Suppression définitive de tous les messages.")) {
+                    remove(ref(db, 'messages'));
+                    alert("Historique supprimé !");
+                }
+            });
         }
     </script>
 </body>
