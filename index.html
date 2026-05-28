@@ -7,14 +7,31 @@
 </head>
 <body>
 
-<div class="box" id="login-box">
+<div class="box" id="profile-section">
+    <h2>Bienvenue, user !</h2>
+    <div class="user-profile">
+        <h3>Paramètres Utilisateur</h3>
+        <input type="text" id="prenom" value="Antoine" placeholder="Prénom">
+        <input type="text" id="nom" value="Nguyen" placeholder="Nom">
+        <input type="number" id="age" placeholder="Âge (14 ans)">
+        <input type="tel" id="tel" placeholder="Numéro de téléphone">
+        <input type="text" id="adresse" value="20 rue du Beauvoisis, 45140 Ormes" placeholder="Adresse postale">
+        <p class="privacy-note">✓ Vos informations personnelles ne seront jamais divulguées en dehors de ce site.</p>
+    </div>
+
+    <div id="google-login">
+        <button onclick="simulateGoogleLogin()" style="background: white; color: #555;">Se connecter avec Google</button>
+    </div>
+</div>
+
+<div class="box" id="login-box" style="display:none;">
     <h2>Connexion YouTube</h2>
     <input type="password" id="pass" placeholder="Entrez le mot de passe">
-    <button onclick="checkLogin()">Accéder</button>
+    <button onclick="checkLogin()">Accéder au Dashboard</button>
 </div>
 
 <div id="dashboard" style="display:none; width: 80%;">
-    <h1 id="welcome-title">Bienvenue</h1>
+    <h1 id="welcome-title">Bienvenue sur le Dashboard</h1>
     
     <div class="box">
         <h3>Générateur SEO</h3>
@@ -25,9 +42,7 @@
     <div class="box" style="margin-top: 20px;">
         <h3>Planning Vidéos</h3>
         <table>
-            <thead>
-                <tr><th>Titre</th><th>Statut</th></tr>
-            </thead>
+            <thead><tr><th>Titre</th><th>Statut</th></tr></thead>
             <tbody id="table-body">
                 <tr><td>Vidéo Minecraft</td><td><span class="status-badge">Montage</span></td></tr>
                 <tr><td>Tuto CyberShield</td><td><span class="status-badge">Écriture</span></td></tr>
