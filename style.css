@@ -1,7 +1,6 @@
 :root { --bg-color: #0f172a; --accent-color: #f59e0b; }
 body { background: var(--bg-color); color: white; font-family: sans-serif; padding: 20px; }
 .box { background: #1e293b; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; }
-input { display: block; width: 100%; margin: 10px 0; padding: 10px; }
-button { background: var(--accent-color); border: none; padding: 10px; cursor: pointer; width: 100%; }
-#messages { height: 300px; border: 1px solid #334155; overflow-y: scroll; margin-bottom: 10px; padding: 10px; }    font-weight: bold;
-}
+input { display: block; width: 100%; margin: 10px 0; padding: 10px; border-radius: 5px; border: none; }
+button { background: var(--accent-color); border: none; padding: 10px; cursor: pointer; width: 100%; border-radius: 5px; color: #0f172a; font-weight: bold; }
+#messages { height: 200px; border: 1px solid #334155; overflow-y: scroll; margin-bottom: 10px; padding: 10px; background: #0f172a; }
