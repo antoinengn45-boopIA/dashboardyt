@@ -2,29 +2,31 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Admin</title>
+    <title>YT Admin - Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="box">
-    <h2>Notifications Admin</h2>
-    <div id="admin-notif">En attente de données...</div>
-    <button onclick="lireInfos()">Rafraîchir les données</button>
+    <h2>Panneau Administrateur</h2>
+    <p>Cette page est sécurisée.</p>
+    
+    <div id="admin-content" style="display:none;">
+        <h3>Dernières notifications :</h3>
+        <p>Pour voir les données des utilisateurs, veuillez consulter votre boîte mail liée à <strong>Formspree (xaqkvjqb)</strong>. Chaque soumission de formulaire vous y est envoyée automatiquement.</p>
+    </div>
 </div>
 
 <script>
-function lireInfos() {
-    const data = JSON.parse(localStorage.getItem('userProfile'));
-    const div = document.getElementById('admin-notif');
-    if (data) {
-        div.innerHTML = `<strong>Nouveau profil reçu :</strong><br>
-        ${data.prenom} ${data.nom} (${data.age} ans)<br>
-        Tel: ${data.tel}<br>Adresse: ${data.adresse}`;
+    // Protection simple par mot de passe pour la page Admin
+    const auth = prompt("Entrez le mot de passe Admin :", "");
+    if (auth === "ayman") {
+        document.getElementById('admin-content').style.display = 'block';
     } else {
-        div.innerText = "Aucune information reçue.";
+        document.body.innerHTML = "<h1>Accès refusé. Retournez à l'accueil.</h1>";
+        setTimeout(() => { window.location.href = "index.html"; }, 2000);
     }
-}
 </script>
+
 </body>
 </html>
