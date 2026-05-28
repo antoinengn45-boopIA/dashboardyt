@@ -6,14 +6,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Panneau Administrateur SandTech</h1>
-    <div id="user-list">
-        <h3>Utilisateurs connectés :</h3>
-        <!-- Liste générée par script -->
+    <div class="box">
+        <h1>Admin SandTech</h1>
+        <div id="user-list">
+            <h3>Utilisateurs connectés :</h3>
+        </div>
+        <hr>
+        <input type="text" id="admin-msg" placeholder="Message Admin...">
+        <button onclick="sendAdminMessage()">Envoyer à tous</button>
     </div>
+
     <script>
         const auth = prompt("Mot de passe Admin :");
         if (auth !== "ayman") window.location.href = "index.html";
+        
+        // Ici, tu pourras afficher les utilisateurs stockés dans localStorage
     </script>
 </body>
 </html>
