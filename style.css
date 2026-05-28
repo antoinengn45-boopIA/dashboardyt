@@ -5,17 +5,18 @@
     --text-color: #f1f5f9;
 }
 
-body { background-color: var(--bg-color); color: var(--text-color); font-family: sans-serif; }
+body { background-color: var(--bg-color); color: var(--text-color); font-family: sans-serif; margin: 0; padding: 20px; }
 
-.calendar-container { max-width: 800px; margin: 40px auto; }
+.calendar-container { max-width: 800px; margin: 0 auto; text-align: center; }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
+    margin-top: 20px;
 }
 
-.day-header { font-weight: bold; text-align: center; color: var(--accent-color); }
+.day-header { font-weight: bold; color: var(--accent-color); }
 
 .day {
     background: var(--card-bg);
@@ -23,12 +24,15 @@ body { background-color: var(--bg-color); color: var(--text-color); font-family:
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #334155;
+    transition: 0.3s;
 }
+
+.day:hover { border: 1px solid var(--accent-color); }
 
 .task {
     background: var(--accent-color);
     color: #0f172a;
-    padding: 5px;
+    padding: 4px;
     font-size: 0.75rem;
     border-radius: 4px;
     margin-top: 5px;
