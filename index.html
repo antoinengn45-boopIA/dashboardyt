@@ -2,46 +2,63 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>SandTech Live</title>
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Firebase SDKs CDN -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
-
-        // Ta config récupérée dans "image_e71367.png"
-        const firebaseConfig = {
-            apiKey: "AIzaSyApHM6M8CMhKaad5E4lQfWzjxJziMzWkBs",
-            authDomain: "web-app-5c43b.firebaseapp.com",
-            projectId: "web-app-5c43b",
-            storageBucket: "web-app-5c43b.appspot.com",
-            messagingSenderId: "821414265483",
-            appId: "1:821414265483:web:bc04011134684930194a8e"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        // Envoyer message
-        window.sendMessage = () => {
-            const user = JSON.parse(localStorage.getItem('sandtech_user'));
-            const msg = document.getElementById('msg-input').value;
-            push(ref(db, 'messages'), { pseudo: user.pseudo, text: msg });
-            document.getElementById('msg-input').value = '';
-        };
-
-        // Recevoir messages en direct
-        onChildAdded(ref(db, 'messages'), (data) => {
-            const m = data.val();
-            document.getElementById('messages').innerHTML += `<p><strong>${m.pseudo}</strong>: ${m.text}</p>`;
-        });
-    </script>
+    <title>SandTech | Connexion</title>
+    <style>
+        :root { --main: #f59e0b; --bg: #0f172a; --panel: #1e293b; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding-top: 50px; }
+        .card { background: var(--panel); padding: 30px; border-radius: 15px; width: 350px; border: 1px solid #334155; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--main); border: none; border-radius: 6px; color: #0f172a; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        #chat-area { display: none; }
+    </style>
 </head>
 <body>
-    <!-- Ton formulaire et ta chat-box restent ici -->
-    <div id="messages"></div>
+
+<div class="card" id="auth-box">
+    <h2>SandTech Connect</h2>
+    <input type="text" id="pseudo" placeholder="Pseudo">
+    <input type="text" id="nom" placeholder="Nom">
+    <input type="email" id="email" placeholder="Email">
+    <button onclick="register()">Créer mon compte</button>
+</div>
+
+<div id="chat-area">
+    <div id="messages" style="height: 200px; overflow-y: scroll; border: 1px solid #334155; padding: 10px;"></div>
     <input type="text" id="msg-input" placeholder="Message...">
     <button onclick="sendMessage()">Envoyer</button>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+    const firebaseConfig = { /* Ton bloc de config ici */ };
+    const db = getDatabase(initializeApp(firebaseConfig));
+
+    window.register = () => {
+        const user = {
+            pseudo: document.getElementById('pseudo').value,
+            nom: document.getElementById('nom').value,
+            email: document.getElementById('email').value
+        };
+        // Sauvegarde l'utilisateur dans la base Firebase
+        push(ref(db, 'users'), user);
+        localStorage.setItem('sandtech_user', JSON.stringify(user));
+        document.getElementById('auth-box').style.display = 'none';
+        document.getElementById('chat-area').style.display = 'block';
+    };
+
+    window.sendMessage = () => {
+        const user = JSON.parse(localStorage.getItem('sandtech_user'));
+        const msg = document.getElementById('msg-input').value;
+        push(ref(db, 'messages'), { pseudo: user.pseudo, text: msg });
+        document.getElementById('msg-input').value = '';
+    };
+
+    onChildAdded(ref(db, 'messages'), (data) => {
+        const m = data.val();
+        document.getElementById('messages').innerHTML += `<p><b>${m.pseudo}</b>: ${m.text}</p>`;
+    });
+</script>
 </body>
 </html>
