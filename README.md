@@ -1,4 +1,4 @@
-# YT Manager Calendar
-Système de gestion éditorial sous forme de calendrier mensuel.
-- `index.html` : Vue utilisateur.
-- `admin.html` : Vue administrateur protégée.
+# SandTech Manager
+Système de gestion interne pour SandTech.
+- `index.html` : Calendrier public.
+- `admin.html` : Interface d'édition sécurisée.
