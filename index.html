@@ -2,29 +2,46 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>SandTech - Messagerie</title>
+    <title>SandTech Live</title>
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase SDKs CDN -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+        // Ta config récupérée dans "image_e71367.png"
+        const firebaseConfig = {
+            apiKey: "AIzaSyApHM6M8CMhKaad5E4lQfWzjxJziMzWkBs",
+            authDomain: "web-app-5c43b.firebaseapp.com",
+            projectId: "web-app-5c43b",
+            storageBucket: "web-app-5c43b.appspot.com",
+            messagingSenderId: "821414265483",
+            appId: "1:821414265483:web:bc04011134684930194a8e"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Envoyer message
+        window.sendMessage = () => {
+            const user = JSON.parse(localStorage.getItem('sandtech_user'));
+            const msg = document.getElementById('msg-input').value;
+            push(ref(db, 'messages'), { pseudo: user.pseudo, text: msg });
+            document.getElementById('msg-input').value = '';
+        };
+
+        // Recevoir messages en direct
+        onChildAdded(ref(db, 'messages'), (data) => {
+            const m = data.val();
+            document.getElementById('messages').innerHTML += `<p><strong>${m.pseudo}</strong>: ${m.text}</p>`;
+        });
+    </script>
 </head>
 <body>
-
-<div class="box" id="auth-box">
-    <h2>SandTech - Accès</h2>
-    <form id="user-form">
-        <input type="text" id="pseudo" placeholder="Pseudo" required>
-        <input type="text" id="nom" placeholder="Nom" required>
-        <input type="text" id="prenom" placeholder="Prénom" required>
-        <input type="number" id="age" placeholder="Âge" required>
-        <input type="email" id="email" placeholder="Adresse mail" required>
-        <button type="submit">Rejoindre le salon</button>
-    </form>
-</div>
-
-<div class="box" id="chat-box" style="display:none;">
+    <!-- Ton formulaire et ta chat-box restent ici -->
     <div id="messages"></div>
     <input type="text" id="msg-input" placeholder="Message...">
     <button onclick="sendMessage()">Envoyer</button>
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
