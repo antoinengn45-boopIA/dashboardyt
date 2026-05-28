@@ -2,19 +2,58 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>SandTech Admin</title>
+    <title>SandTech | Admin Panel</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="card">
-        <h1>Admin SandTech</h1>
-        <div id="user-list"></div>
+        <h1>Dashboard Admin</h1>
+        <div id="admin-content">
+            <p>Liste des utilisateurs inscrits :</p>
+            <div id="user-list"></div>
+        </div>
     </div>
+
     <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
-        // Ajoute ici l'initialisation Firebase comme dans script.js
-        const auth = prompt("Mot de passe Admin :");
-        if (auth !== "ayman") window.location.href = "index.html";
+
+        // Configuration Firebase (identique à celle de script.js)
+        const firebaseConfig = {
+            apiKey: "AIzaSyApHM6M8CMhKaad5E4lQfWzjxJziMzWkBs",
+            authDomain: "web-app-5c43b.firebaseapp.com",
+            projectId: "web-app-5c43b",
+            storageBucket: "web-app-5c43b.appspot.com",
+            messagingSenderId: "821414265483",
+            appId: "1:821414265483:web:bc04011134684930194a8e",
+            databaseURL: "https://web-app-5c43b-default-rtdb.firebaseio.com"
+        };
+
+        const db = getDatabase(initializeApp(firebaseConfig));
+
+        // Protection simple par mot de passe
+        const password = prompt("Entrez le mot de passe Admin :");
+        if (password !== "ayman") {
+            alert("Accès refusé.");
+            window.location.href = "index.html";
+        } else {
+            // Récupération et affichage de la liste des utilisateurs
+            onValue(ref(db, 'users'), (snapshot) => {
+                const data = snapshot.val();
+                const userListDiv = document.getElementById('user-list');
+                userListDiv.innerHTML = ""; // Nettoyage
+
+                if (data) {
+                    Object.values(data).forEach(user => {
+                        userListDiv.innerHTML += `<p style="border-bottom:1px solid #334155; padding:5px;">
+                            <b>${user.pseudo}</b> (${user.email})
+                        </p>`;
+                    });
+                } else {
+                    userListDiv.innerHTML = "<p>Aucun utilisateur trouvé.</p>";
+                }
+            });
+        }
     </script>
 </body>
 </html>
