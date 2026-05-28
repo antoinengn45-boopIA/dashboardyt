@@ -1,46 +1,30 @@
-<button onclick="register()">Créer mon compte</button>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>SandTech | Messagerie Live</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card" id="auth-box">
+    <h2>SandTech Connect</h2>
+    <input type="text" id="pseudo" placeholder="Pseudo choisi">
+    <input type="text" id="nom" placeholder="Nom complet">
+    <input type="email" id="email" placeholder="Adresse email">
+    <!-- Bouton avec ID pour l'événement JS -->
+    <button id="btn-register">Créer mon compte SandTech</button>
 </div>
 
 <div class="card" id="chat-area" style="display:none;">
     <h2>Salon SandTech</h2>
     <div id="messages"></div>
-    <input type="text" id="msg-input" placeholder="Message...">
-    <button onclick="sendMessage()">Envoyer</button>
+    <div class="input-group">
+        <input type="text" id="msg-input" placeholder="Ton message...">
+        <button id="btn-send">Envoyer</button>
+    </div>
 </div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
-
-    // Ta configuration Firebase (vérifie bien qu'elle est complète !)
-    const firebaseConfig = {
-        apiKey: "AIzaSyApHM6M8CMhKaad5E4lQfWzjxJziMzWkBs",
-        authDomain: "web-app-5c43b.firebaseapp.com",
-        projectId: "web-app-5c43b",
-        storageBucket: "web-app-5c43b.appspot.com",
-        messagingSenderId: "821414265483",
-        appId: "1:821414265483:web:bc04011134684930194a8e"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    window.register = () => {
-        console.log("Tentative de connexion..."); // Ça apparaîtra dans F12 > Console
-        const user = {
-            pseudo: document.getElementById('pseudo').value,
-            nom: document.getElementById('nom').value,
-            email: document.getElementById('email').value
-        };
-        
-        if(!user.pseudo || !user.nom || !user.email) {
-            alert("Merci de remplir tous les champs !");
-            return;
-        }
-
-        localStorage.setItem('sandtech_user', JSON.stringify(user));
-        document.getElementById('auth-box').style.display = 'none';
-        document.getElementById('chat-area').style.display = 'block';
-        console.log("Connexion réussie !");
-    };
-</script>
+<script type="module" src="script.js"></script>
+</body>
+</html>
