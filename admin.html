@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="box">
+    <h2>Notifications Admin</h2>
+    <div id="admin-notif">En attente de données...</div>
+    <button onclick="lireInfos()">Rafraîchir les données</button>
+</div>
+
+<script>
+function lireInfos() {
+    const data = JSON.parse(localStorage.getItem('userProfile'));
+    const div = document.getElementById('admin-notif');
+    if (data) {
+        div.innerHTML = `<strong>Nouveau profil reçu :</strong><br>
+        ${data.prenom} ${data.nom} (${data.age} ans)<br>
+        Tel: ${data.tel}<br>Adresse: ${data.adresse}`;
+    } else {
+        div.innerText = "Aucune information reçue.";
+    }
+}
+</script>
+</body>
+</html>
