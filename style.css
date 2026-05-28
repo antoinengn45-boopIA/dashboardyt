@@ -1,6 +1,6 @@
 :root { --main: #f59e0b; --bg: #0f172a; --panel: #1e293b; }
 body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding-top: 50px; }
 .card { background: var(--panel); padding: 25px; border-radius: 12px; width: 350px; border: 1px solid #334155; }
-input { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: none; background: #0f172a; color: white; }
+input { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: none; background: #0f172a; color: white; box-sizing: border-box; }
 button { width: 100%; padding: 10px; background: var(--main); border: none; border-radius: 5px; color: #0f172a; font-weight: bold; cursor: pointer; }
 #messages { height: 250px; overflow-y: scroll; border: 1px solid #334155; padding: 10px; margin-bottom: 10px; background: #0f172a; border-radius: 5px; }
