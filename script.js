@@ -14,8 +14,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Inscription
-window.register = () => {
+// Fonction d'inscription
+function register() {
     const user = {
         pseudo: document.getElementById('pseudo').value,
         nom: document.getElementById('nom').value,
@@ -29,10 +29,10 @@ window.register = () => {
     } else {
         alert("Veuillez remplir tous les champs !");
     }
-};
+}
 
-// Envoi message
-window.sendMessage = () => {
+// Fonction d'envoi
+function sendMessage() {
     const user = JSON.parse(localStorage.getItem('sandtech_user'));
     const msgInput = document.getElementById('msg-input');
     
@@ -44,7 +44,11 @@ window.sendMessage = () => {
         });
         msgInput.value = '';
     }
-};
+}
+
+// Connexion des événements via addEventListener (au lieu de onclick)
+document.getElementById('btn-register').addEventListener('click', register);
+document.getElementById('btn-send').addEventListener('click', sendMessage);
 
 // Écoute des nouveaux messages
 onChildAdded(ref(db, 'messages'), (data) => {
@@ -53,6 +57,5 @@ onChildAdded(ref(db, 'messages'), (data) => {
     const div = document.createElement('p');
     div.innerHTML = `<b>${m.pseudo}</b>: ${m.text}`;
     messagesDiv.appendChild(div);
-    // Auto-scroll vers le bas
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 });
