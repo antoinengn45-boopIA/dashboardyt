@@ -2,31 +2,29 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>YT Admin - Dashboard</title>
+    <title>Admin - Calendrier</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="box">
-    <h2>Panneau Administrateur</h2>
-    <p>Cette page est sécurisée.</p>
-    
-    <div id="admin-content" style="display:none;">
-        <h3>Dernières notifications :</h3>
-        <p>Pour voir les données des utilisateurs, veuillez consulter votre boîte mail liée à <strong>Formspree (xaqkvjqb)</strong>. Chaque soumission de formulaire vous y est envoyée automatiquement.</p>
+<div class="calendar-container">
+    <h1>Dashboard Admin</h1>
+    <div class="calendar-grid" id="admin-calendar">
+        <div class="day-header">Lun</div><div class="day-header">Mar</div>
+        <div class="day-header">Mer</div><div class="day-header">Jeu</div>
+        <div class="day-header">Ven</div><div class="day-header">Sam</div>
+        <div class="day-header">Dim</div>
+        <div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div>
+        <div class="day">5</div><div class="day">6</div><div class="day">7</div>
     </div>
 </div>
 
 <script>
-    // Protection simple par mot de passe pour la page Admin
-    const auth = prompt("Entrez le mot de passe Admin :", "");
-    if (auth === "ayman") {
-        document.getElementById('admin-content').style.display = 'block';
-    } else {
-        document.body.innerHTML = "<h1>Accès refusé. Retournez à l'accueil.</h1>";
+    const auth = prompt("Mot de passe Admin :");
+    if (auth !== "ayman") {
+        document.body.innerHTML = "<h1>Accès refusé.</h1>";
         setTimeout(() => { window.location.href = "index.html"; }, 2000);
     }
 </script>
-
 </body>
 </html>
