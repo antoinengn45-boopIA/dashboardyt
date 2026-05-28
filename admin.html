@@ -6,21 +6,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="box">
+    <div class="card">
         <h1>Admin SandTech</h1>
-        <div id="user-list">
-            <h3>Utilisateurs connectés :</h3>
-        </div>
-        <hr>
-        <input type="text" id="admin-msg" placeholder="Message Admin...">
-        <button onclick="sendAdminMessage()">Envoyer à tous</button>
+        <div id="user-list"></div>
     </div>
-
-    <script>
+    <script type="module">
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+        // Ajoute ici l'initialisation Firebase comme dans script.js
         const auth = prompt("Mot de passe Admin :");
         if (auth !== "ayman") window.location.href = "index.html";
-        
-        // Ici, tu pourras afficher les utilisateurs stockés dans localStorage
     </script>
 </body>
 </html>
