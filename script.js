@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+import { getDatabase, ref, push, onChildAdded, remove } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyApHM6M8CMhKaad5E4lQfWzjxJziMzWkBs",
@@ -13,28 +13,38 @@ const firebaseConfig = {
 
 const db = getDatabase(initializeApp(firebaseConfig));
 
+// --- Persistance de connexion ---
+window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('sandtech_user')) {
+        document.getElementById('auth-box').style.display = 'none';
+        document.getElementById('chat-area').style.display = 'block';
+    }
+});
+
+// --- Inscription ---
 function register() {
     const user = {
         pseudo: document.getElementById('pseudo').value,
         nom: document.getElementById('nom').value,
         email: document.getElementById('email').value
     };
-    
     if (user.pseudo && user.nom && user.email) {
         localStorage.setItem('sandtech_user', JSON.stringify(user));
-        document.getElementById('auth-box').style.display = 'none';
-        document.getElementById('chat-area').style.display = 'block';
-    } else {
-        alert("Veuillez remplir tous les champs !");
+        location.reload(); // Actualise pour appliquer le mode connecté
     }
 }
 
-function sendMessage() {
-    const user = JSON.parse(localStorage.getItem('sandtech_user'));
-    const msgInput = document.getElementById('msg-input');
-    
-    if (msgInput.value.trim() !== "") {
-        push(ref(db, 'messages'), { 
+// --- Suppression historique (pour Admin) ---
+window.clearChat = () => {
+    if (confirm("Voulez-vous vraiment supprimer TOUS les messages ?")) {
+        remove(ref(db, 'messages'));
+        document.getElementById('messages').innerHTML = "";
+    }
+};
+
+// ... (Garde tes fonctions sendMessage et onChildAdded ici) ...
+document.getElementById('btn-register').addEventListener('click', register);
+// ...        push(ref(db, 'messages'), { 
             pseudo: user.pseudo, 
             text: msgInput.value, 
             time: Date.now() 
