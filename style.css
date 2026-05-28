@@ -73,4 +73,16 @@ th, td {
     border-radius: 4px;
     font-size: 0.8rem;
     background: #334155;
+    .privacy-note {
+    color: #22c55e; /* Vert */
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+
+.user-profile {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #334155;
+    border-radius: 8px;
+}
 }
