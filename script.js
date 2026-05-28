@@ -11,10 +11,8 @@ const firebaseConfig = {
     databaseURL: "https://web-app-5c43b-default-rtdb.firebaseio.com"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const db = getDatabase(initializeApp(firebaseConfig));
 
-// Fonction d'inscription
 function register() {
     const user = {
         pseudo: document.getElementById('pseudo').value,
@@ -31,10 +29,31 @@ function register() {
     }
 }
 
-// Fonction d'envoi
 function sendMessage() {
     const user = JSON.parse(localStorage.getItem('sandtech_user'));
     const msgInput = document.getElementById('msg-input');
+    
+    if (msgInput.value.trim() !== "") {
+        push(ref(db, 'messages'), { 
+            pseudo: user.pseudo, 
+            text: msgInput.value, 
+            time: Date.now() 
+        });
+        msgInput.value = '';
+    }
+}
+
+document.getElementById('btn-register').addEventListener('click', register);
+document.getElementById('btn-send').addEventListener('click', sendMessage);
+
+onChildAdded(ref(db, 'messages'), (data) => {
+    const m = data.val();
+    const messagesDiv = document.getElementById('messages');
+    const div = document.createElement('p');
+    div.innerHTML = `<b>${m.pseudo}</b>: ${m.text}`;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+});    const msgInput = document.getElementById('msg-input');
     
     if (msgInput.value.trim() !== "") {
         push(ref(db, 'messages'), { 
