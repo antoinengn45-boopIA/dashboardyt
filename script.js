@@ -4,6 +4,7 @@ function checkLogin() {
     const loginBox = document.getElementById('login-box');
     const profile = document.getElementById('profile-section');
 
+    // Correction : Ajout de l'accolade ouvrante ici
     if (p === 'ayman' || p === 'aygame') {
         loginBox.style.display = 'none';
         profile.style.display = 'none';
