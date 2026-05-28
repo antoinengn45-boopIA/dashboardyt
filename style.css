@@ -1,10 +1,11 @@
-/* Variables de couleurs pour faciliter la modification */
+/* Variables de couleurs */
 :root {
     --bg-color: #0f172a;
     --card-bg: #1e293b;
     --accent-color: #38bdf8; /* Bleu néon */
     --text-color: #f1f5f9;
     --admin-color: #f43f5e; /* Rouge pour l'admin */
+    --success-color: #22c55e; /* Vert */
 }
 
 body {
@@ -18,7 +19,7 @@ body {
     min-height: 100vh;
 }
 
-/* Style de la carte de connexion */
+/* Style de la carte générale */
 .box {
     background: var(--card-bg);
     padding: 2rem;
@@ -26,8 +27,10 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     border: 1px solid #334155;
     text-align: center;
+    margin-bottom: 20px;
 }
 
+/* Champs de saisie */
 input {
     background: #0f172a;
     border: 1px solid #475569;
@@ -39,6 +42,7 @@ input {
     display: block;
 }
 
+/* Boutons */
 button {
     background: var(--accent-color);
     color: #0f172a;
@@ -55,7 +59,7 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Style pour les tables (Planning) */
+/* Planning */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -73,16 +77,18 @@ th, td {
     border-radius: 4px;
     font-size: 0.8rem;
     background: #334155;
-    .privacy-note {
-    color: #22c55e; /* Vert */
-    font-size: 0.8rem;
-    margin-top: 10px;
 }
 
+/* Profil Utilisateur et Confidentialité */
 .user-profile {
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #334155;
     border-radius: 8px;
 }
+
+.privacy-note {
+    color: var(--success-color);
+    font-size: 0.8rem;
+    margin-top: 10px;
 }
