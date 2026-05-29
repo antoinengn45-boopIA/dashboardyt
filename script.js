@@ -24,17 +24,34 @@ window.addEventListener('DOMContentLoaded', () => {
 // --- Inscription ---
 function register() {
     const user = {
-        pseudo: document.getElementById('pseudo').value,
-        nom: document.getElementById('nom').value,
-        email: document.getElementById('email').value
+        pseudo: document.getElementById('pseudo').value.trim(),
+        nom: document.getElementById('nom').value.trim(),
+        email: document.getElementById('email').value.trim()
     };
     if (user.pseudo && user.nom && user.email) {
         localStorage.setItem('sandtech_user', JSON.stringify(user));
-        location.reload(); // Actualise pour appliquer le mode connecté
+        location.reload();
     }
 }
 
-// --- Suppression historique (pour Admin) ---
+// --- Envoi de message ---
+function sendMessage() {
+    const userRaw = localStorage.getItem('sandtech_user');
+    if (!userRaw) return;
+    const user = JSON.parse(userRaw);
+    const msgInput = document.getElementById('msg-input');
+
+    if (msgInput.value.trim() !== "") {
+        push(ref(db, 'messages'), {
+            pseudo: user.pseudo,
+            text: msgInput.value,
+            time: Date.now()
+        });
+        msgInput.value = '';
+    }
+}
+
+// --- Suppression historique (exposée pour Admin) ---
 window.clearChat = () => {
     if (confirm("Voulez-vous vraiment supprimer TOUS les messages ?")) {
         remove(ref(db, 'messages'));
@@ -42,49 +59,21 @@ window.clearChat = () => {
     }
 };
 
-// ... (Garde tes fonctions sendMessage et onChildAdded ici) ...
-document.getElementById('btn-register').addEventListener('click', register);
-// ...        push(ref(db, 'messages'), { 
-            pseudo: user.pseudo, 
-            text: msgInput.value, 
-            time: Date.now() 
-        });
-        msgInput.value = '';
-    }
-}
-
+// --- Connexion des événements ---
 document.getElementById('btn-register').addEventListener('click', register);
 document.getElementById('btn-send').addEventListener('click', sendMessage);
 
+// Envoi avec la touche Entrée
+document.getElementById('msg-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') sendMessage();
+});
+
+// --- Écoute des nouveaux messages ---
 onChildAdded(ref(db, 'messages'), (data) => {
     const m = data.val();
     const messagesDiv = document.getElementById('messages');
     const div = document.createElement('p');
-    div.innerHTML = `<b>${m.pseudo}</b>: ${m.text}`;
-    messagesDiv.appendChild(div);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-});    const msgInput = document.getElementById('msg-input');
-    
-    if (msgInput.value.trim() !== "") {
-        push(ref(db, 'messages'), { 
-            pseudo: user.pseudo, 
-            text: msgInput.value, 
-            time: Date.now() 
-        });
-        msgInput.value = '';
-    }
-}
-
-// Connexion des événements via addEventListener (au lieu de onclick)
-document.getElementById('btn-register').addEventListener('click', register);
-document.getElementById('btn-send').addEventListener('click', sendMessage);
-
-// Écoute des nouveaux messages
-onChildAdded(ref(db, 'messages'), (data) => {
-    const m = data.val();
-    const messagesDiv = document.getElementById('messages');
-    const div = document.createElement('p');
-    div.innerHTML = `<b>${m.pseudo}</b>: ${m.text}`;
+    div.innerHTML = `<b>${m.pseudo}</b> : ${m.text}`;
     messagesDiv.appendChild(div);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 });
