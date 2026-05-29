@@ -11,9 +11,8 @@
         <button onclick="window.location.href='index.html'" style="background: #334155; color: white; margin-bottom: 20px; cursor: pointer; border: none; padding: 10px; border-radius: 4px; width: 100%;">
             Retour au Salon
         </button>
-
         <h1>Dashboard Admin</h1>
-        
+
         <!-- Bouton de suppression -->
         <button id="btn-clear" style="background: #ef4444; color: white; margin-bottom: 20px; cursor: pointer; border: none; padding: 10px; border-radius: 4px; width: 100%;">
             Vider tout le chat
@@ -49,9 +48,11 @@
             onValue(ref(db, 'users'), (snapshot) => {
                 const data = snapshot.val();
                 const list = document.getElementById('user-list');
-                list.innerHTML = data ? Object.values(data).map(u => 
-                    `<p style="border-bottom:1px solid #334155; padding:5px;"><b>${u.pseudo}</b> (${u.email})</p>`
-                ).join('') : "Aucun utilisateur trouvé.";
+                list.innerHTML = data
+                    ? Object.values(data).map(u =>
+                        `<p style="border-bottom:1px solid #334155; padding:5px;"><b>${u.pseudo}</b> (${u.email})</p>`
+                      ).join('')
+                    : "<p>Aucun utilisateur trouvé.</p>";
             });
 
             // Action de suppression
