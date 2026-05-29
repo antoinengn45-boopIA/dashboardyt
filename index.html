@@ -6,28 +6,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="card">
+        <button onclick="window.location.href='admin.html'" style="background: #334155; color: #f59e0b; margin-bottom: 20px; font-size: 12px; padding: 5px; cursor: pointer; border: none; border-radius: 4px;">
+            Accès Admin
+        </button>
 
-<div class="card">
-    <button onclick="window.location.href='admin.html'" style="background: #334155; color: #f59e0b; margin-bottom: 20px; font-size: 12px; padding: 5px; cursor: pointer; border: none; border-radius: 4px;">Accès Admin</button>
+        <div id="auth-box">
+            <h2>SandTech Connect</h2>
+            <input type="text" id="pseudo" placeholder="Pseudo choisi">
+            <input type="text" id="nom" placeholder="Nom complet">
+            <input type="email" id="email" placeholder="Adresse email">
+            <button id="btn-register">Créer mon compte</button>
+        </div>
 
-    <div id="auth-box">
-        <h2>SandTech Connect</h2>
-        <input type="text" id="pseudo" placeholder="Pseudo choisi">
-        <input type="text" id="nom" placeholder="Nom complet">
-        <input type="email" id="email" placeholder="Adresse email">
-        <button id="btn-register">Créer mon compte</button>
-    </div>
-
-    <div id="chat-area" style="display:none;">
-        <h2>Salon SandTech</h2>
-        <div id="messages"></div>
-        <div class="input-group">
-            <input type="text" id="msg-input" placeholder="Ton message...">
-            <button id="btn-send">Envoyer</button>
+        <div id="chat-area" style="display:none;">
+            <h2>Salon SandTech</h2>
+            <div id="messages"></div>
+            <div class="input-group">
+                <input type="text" id="msg-input" placeholder="Ton message...">
+                <button id="btn-send">Envoyer</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script type="module" src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
